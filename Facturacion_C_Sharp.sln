@@ -1,0 +1,23 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facturacion_C_Sharp", "Facturacion_C_Sharp\Facturacion_C_Sharp.csproj", "{94760A46-89DD-4658-905A-A62E977953BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "..\Test\Test\Test.csproj", "{72384B79-0B47-494E-B5CC-5F6F705F2814}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{94760A46-89DD-4658-905A-A62E977953BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94760A46-89DD-4658-905A-A62E977953BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94760A46-89DD-4658-905A-A62E977953BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94760A46-89DD-4658-905A-A62E977953BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72384B79-0B47-494E-B5CC-5F6F705F2814}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72384B79-0B47-494E-B5CC-5F6F705F2814}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72384B79-0B47-494E-B5CC-5F6F705F2814}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72384B79-0B47-494E-B5CC-5F6F705F2814}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Utils\" />
+    <Folder Include="Lib\" />
+    <Folder Include="Lib\DocumentoItems\" />
+    <Folder Include="Java_bin\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Lib\DocumentoElectronico\NotaCreditoElectronica.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="RestSharp" Version="106.2.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+  </ItemGroup>
+</Project>
