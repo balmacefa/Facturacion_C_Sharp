@@ -41,21 +41,21 @@ namespace Facturacion_C_Sharp.Lib.DocumentoItems
         private int numeroDocumento;
         private String nombreInstitucion;
         private DateTime fechaEmision;
-        private float montoImpuesto;
-        private float totalNeto;
+        private decimal montoImpuesto;
+        private decimal totalNeto;
 
         //Dispensable
-        private float porcentajeCompra;
+        private decimal porcentajeCompra;
 
         public TipoDocumento TipoDocumento1 { get => tipoDocumento; set => tipoDocumento = value; }
         public int NumeroDocumento { get => numeroDocumento; set => numeroDocumento = value; }
         public string NombreInstitucion { get => nombreInstitucion; set => nombreInstitucion = value; }
         public DateTime FechaEmision { get => fechaEmision; set => fechaEmision = value; }
-        public float MontoImpuesto { get => montoImpuesto; set => montoImpuesto = value; }
-        public float TotalNeto { get => totalNeto; set => totalNeto = value; }
-        public float PorcentajeCompra { get => porcentajeCompra; set => porcentajeCompra = value; }
+        public decimal MontoImpuesto { get => montoImpuesto; set => montoImpuesto = value; }
+        public decimal TotalNeto { get => totalNeto; set => totalNeto = value; }
+        public decimal PorcentajeCompra { get => porcentajeCompra; set => porcentajeCompra = value; }
 
-        public Exoneracion(TipoDocumento tipoDocumento, int numeroDocumento, string nombreInstitucion, DateTime fechaEmision, float montoImpuesto, float totalNeto)
+        public Exoneracion(TipoDocumento tipoDocumento, int numeroDocumento, string nombreInstitucion, DateTime fechaEmision, decimal montoImpuesto, decimal totalNeto)
         {
             this.tipoDocumento = tipoDocumento;
             this.numeroDocumento = numeroDocumento;

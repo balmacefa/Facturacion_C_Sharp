@@ -10,33 +10,33 @@ namespace Facturacion_C_Sharp.Lib.DocumentoItems
         //      validates :exchange_rate, presence: true, if: -> { currency.present? }
         //      validate :totals_ok?
 
-        private float totalServGravados;
-        private float totalServExentos;
-        private float totalMercanciasGravadas;
-        private float totalMercanciasExentas;
-        private float totalGravado;
-        private float totalExento;
-        private float totalVenta;
-        private float totalDescuentos;
-        private float totalVentaNeta;
-        private float totalImpuesto;
-        private float totalComprobante;
+        private decimal totalServGravados;
+        private decimal totalServExentos;
+        private decimal totalMercanciasGravadas;
+        private decimal totalMercanciasExentas;
+        private decimal totalGravado;
+        private decimal totalExento;
+        private decimal totalVenta;
+        private decimal totalDescuentos;
+        private decimal totalVentaNeta;
+        private decimal totalImpuesto;
+        private decimal totalComprobante;
         private String codigoMoneda;
-        private float tipoCambio;
+        private decimal tipoCambio;
 
-        public ResumenFactura(float totalServGravados= 0,
-                              float totalServExentos= 0,
-                              float totalMercanciasGravadas= 0,
-                              float totalMercanciasExentas= 0,
-                              float totalGravado= 0,
-                              float totalExento= 0,
-                              float totalVenta= 0,
-                              float totalDescuentos= 0,
-                              float totalVentaNeta= 0,
-                              float totalImpuesto= 0,
-                              float totalComprobante= 0,
+        public ResumenFactura(decimal totalServGravados= 0,
+                              decimal totalServExentos= 0,
+                              decimal totalMercanciasGravadas= 0,
+                              decimal totalMercanciasExentas= 0,
+                              decimal totalGravado= 0,
+                              decimal totalExento= 0,
+                              decimal totalVenta= 0,
+                              decimal totalDescuentos= 0,
+                              decimal totalVentaNeta= 0,
+                              decimal totalImpuesto= 0,
+                              decimal totalComprobante= 0,
                               string codigoMoneda = "",
-                              float tipoCambio=0)
+                              decimal tipoCambio=0)
         {
             this.totalServGravados = totalServGravados;
             this.totalServExentos = totalServExentos;
@@ -53,19 +53,19 @@ namespace Facturacion_C_Sharp.Lib.DocumentoItems
             this.tipoCambio = tipoCambio;
         }
 
-        public float TotalServGravados { get => totalServGravados; set => totalServGravados = value; }
-        public float TotalServExentos { get => totalServExentos; set => totalServExentos = value; }
-        public float TotalMercanciasGravadas { get => totalMercanciasGravadas; set => totalMercanciasGravadas = value; }
-        public float TotalMercanciasExentas { get => totalMercanciasExentas; set => totalMercanciasExentas = value; }
-        public float TotalGravado { get => totalGravado; set => totalGravado = value; }
-        public float TotalExento { get => totalExento; set => totalExento = value; }
-        public float TotalVenta { get => totalVenta; set => totalVenta = value; }
-        public float TotalDescuentos { get => totalDescuentos; set => totalDescuentos = value; }
-        public float TotalVentaNeta { get => totalVentaNeta; set => totalVentaNeta = value; }
-        public float TotalImpuesto { get => totalImpuesto; set => totalImpuesto = value; }
-        public float TotalComprobante { get => totalComprobante; set => totalComprobante = value; }
+        public decimal TotalServGravados { get => totalServGravados; set => totalServGravados = value; }
+        public decimal TotalServExentos { get => totalServExentos; set => totalServExentos = value; }
+        public decimal TotalMercanciasGravadas { get => totalMercanciasGravadas; set => totalMercanciasGravadas = value; }
+        public decimal TotalMercanciasExentas { get => totalMercanciasExentas; set => totalMercanciasExentas = value; }
+        public decimal TotalGravado { get => totalGravado; set => totalGravado = value; }
+        public decimal TotalExento { get => totalExento; set => totalExento = value; }
+        public decimal TotalVenta { get => totalVenta; set => totalVenta = value; }
+        public decimal TotalDescuentos { get => totalDescuentos; set => totalDescuentos = value; }
+        public decimal TotalVentaNeta { get => totalVentaNeta; set => totalVentaNeta = value; }
+        public decimal TotalImpuesto { get => totalImpuesto; set => totalImpuesto = value; }
+        public decimal TotalComprobante { get => totalComprobante; set => totalComprobante = value; }
         public string CodigoMoneda { get => codigoMoneda; set => codigoMoneda = value; }
-        public float TipoCambio { get => tipoCambio; set => tipoCambio = value; }
+        public decimal TipoCambio { get => tipoCambio; set => tipoCambio = value; }
 
         //        private bool ValidarTotales()
         //        {
@@ -86,7 +86,7 @@ namespace Facturacion_C_Sharp.Lib.DocumentoItems
                 baseXML.Add(new XElement("CodigoMoneda", codigoMoneda));
             }
 
-            if (tipoCambio > 0f)
+            if (tipoCambio > 0)
             {
                 baseXML.Add(new XElement("TipoCambio", tipoCambio));
             }

@@ -55,12 +55,12 @@ namespace Facturacion_C_Sharp.Lib.DocumentoItems
 
         //El codigo siempre debe estar presente
         private CodigoImpuesto codigo;
-        private float tarifa;
-        private float monto;
+        private decimal tarifa;
+        private decimal monto;
 
         private Exoneracion exoneracion;
 
-        public Impuesto(CodigoImpuesto codigo, float tarifa, float monto, Exoneracion exoneracion = null)
+        public Impuesto(CodigoImpuesto codigo, decimal tarifa, decimal monto, Exoneracion exoneracion = null)
         {
             this.codigo = codigo;
             this.tarifa = tarifa;
@@ -69,8 +69,8 @@ namespace Facturacion_C_Sharp.Lib.DocumentoItems
         }
 
         public CodigoImpuesto Codigo { get => codigo; set => codigo = value; }
-        public float Tarifa { get => tarifa; set => tarifa = value; }
-        public float Monto { get => monto; set => monto = value; }
+        public decimal Tarifa { get => tarifa; set => tarifa = value; }
+        public decimal Monto { get => monto; set => monto = value; }
         public Exoneracion Exoneracion { get => exoneracion; set => exoneracion = value; }
 
         public XElement GenerarXML()

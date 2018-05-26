@@ -29,7 +29,7 @@ namespace Facturacion_C_Sharp.Lib
 
 
             Stream stream = new MemoryStream( );
-            doc.OptenerXML_Nofirmado().Save( stream );
+            doc.OptenerXML_Nofirmado( ).Save( stream );
             // Rewind the stream ready to read from it elsewhere
             stream.Position = 0;
 

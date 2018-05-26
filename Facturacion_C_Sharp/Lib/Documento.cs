@@ -223,6 +223,11 @@ namespace Facturacion_C_Sharp.Lib
         {
             get => terminalPuntodeVenta; set => terminalPuntodeVenta = value;
         }
+        public string DocumentoFirmadoBase64
+        {
+            get => documentoFirmadoBase64;
+            set => documentoFirmadoBase64 = value;
+        }
 
         public String NumeroConsecutivo ( )
         {

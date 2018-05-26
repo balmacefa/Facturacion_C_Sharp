@@ -17,24 +17,24 @@ namespace Facturacion_C_Sharp.Lib.DocumentoItems
         //      validates :discount_reason, presence: true, if: ->{ discount.present? }
         //      validates :subtotal, presence: true
         //      validates :net_total, presence: true
-        private String numeroLinea;
-        private String cantidad;
+        private int numeroLinea;
+        private decimal cantidad;
         private String unidadMedida;
         private String detalle;
-        private float precioUnitario;
-        private float montoTotal;
-        private float subTotal;
-        private float montoTotalLinea;
+        private decimal precioUnitario;
+        private decimal montoTotal;
+        private decimal subTotal;
+        private decimal montoTotalLinea;
 
         //pueden ser null o ""
         private String[] codigos;
-        private float descuento;
+        private decimal descuento;
         private String naturalezaDescuento;
         private Impuesto[] impuestos;
         private Exoneracion[] exoneraciones;
 
-        public Item(string numeroLinea, string cantidad, string unidadMedida, string detalle, float precioUnitario, float montoTotal, float subTotal, float montoTotalLinea,
-                    string[] codigos =null, float descuento=0f,
+        public Item( int numeroLinea, decimal cantidad, string unidadMedida, string detalle, decimal precioUnitario, decimal montoTotal, decimal subTotal, decimal montoTotalLinea,
+                    string[] codigos =null, decimal descuento =0,
                     string naturalezaDescuento = "", Impuesto[] impuestos = null,
                     Exoneracion[] exoneraciones = null)
         {
@@ -53,16 +53,16 @@ namespace Facturacion_C_Sharp.Lib.DocumentoItems
             this.exoneraciones = exoneraciones;
         }
 
-        public string NumeroLinea { get => numeroLinea; set => numeroLinea = value; }
+        public int NumeroLinea { get => numeroLinea; set => numeroLinea = value; }
         public string[] Codigos { get => codigos; set => codigos = value; }
-        public string Cantidad { get => cantidad; set => cantidad = value; }
+        public decimal Cantidad { get => cantidad; set => cantidad = value; }
         public string UnidadMedida { get => unidadMedida; set => unidadMedida = value; }
         public string Detalle { get => detalle; set => detalle = value; }
-        public float PrecioUnitario { get => precioUnitario; set => precioUnitario = value; }
-        public float MontoTotal { get => montoTotal; set => montoTotal = value; }
-        public float Descuento { get => descuento; set => descuento = value; }
-        public float SubTotal { get => subTotal; set => subTotal = value; }
-        public float MontoTotalLinea { get => montoTotalLinea; set => montoTotalLinea = value; }
+        public decimal PrecioUnitario { get => precioUnitario; set => precioUnitario = value; }
+        public decimal MontoTotal { get => montoTotal; set => montoTotal = value; }
+        public decimal Descuento { get => descuento; set => descuento = value; }
+        public decimal SubTotal { get => subTotal; set => subTotal = value; }
+        public decimal MontoTotalLinea { get => montoTotalLinea; set => montoTotalLinea = value; }
         public string NaturalezaDescuento { get => naturalezaDescuento; set => naturalezaDescuento = value; }
         public Impuesto[] Impuestos { get => impuestos; set => impuestos = value; }
         public Exoneracion[] Exoneraciones { get => exoneraciones; set => exoneraciones = value; }
