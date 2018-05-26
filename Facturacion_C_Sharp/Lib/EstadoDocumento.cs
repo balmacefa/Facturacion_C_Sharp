@@ -10,6 +10,13 @@ namespace Facturacion_C_Sharp.Lib
 {
     public class EstadoDocumento
     {
+        public const String RECIBIDO = "RECIBIDO";
+        public const String PROCESANDO = "PROCESANDO";
+        public const String ACEPTADO = "ACEPTADO";
+        public const String RECHAZADO = "RECHAZADO";
+        public const String ERROR = "ERROR";
+        public const String E400 = "400";
+
         private IRestResponse response;
         private XDocument repuestaXML;
 
