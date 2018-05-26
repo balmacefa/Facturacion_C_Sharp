@@ -11,6 +11,11 @@ Actualmente cuenta con las siguientes características:
 -   Firmado de XML ( utilizando https://github.com/ctt-gob-es/FirmaXadesNet45 )
 -   Comunicación con el API del ministerio de hacienda
 
+## Consideraciones importantes
+
+- El formado de las fechas debe ser "yyyy-MM-dd'T'HH:mm:sszzz"
+- Emisor->Identificacion->Numero debe ser en formato crudo y no en 12 digitos como en el numero de secuencia
+
 ## Implementación
 
 ####C#　
@@ -77,7 +82,6 @@ Impuesto[] { tax }));
 ```
 
 ## TODO
-
 - Verificar el XML contra el XSD
 
 ## Contacto
