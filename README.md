@@ -8,29 +8,26 @@ como punto de partida para realizar la integración necesaria con el Ministerio 
 Actualmente cuenta con las siguientes características:
 
 - Generación de XML
--   Firmado de XML (utilizando JAVA)
+-   Firmado de XML ( utilizando https://github.com/ctt-gob-es/FirmaXadesNet45 )
 -   Comunicación con el API del ministerio de hacienda
 
 ## Implementación
 
 ####C#　
 
-######Configurar las variales
+## Configurar las variales
 ```c#
             var user = "**************";
             var userPass = "**********";
+
             var pin = "****";
             var p12 = "C:\\Users\\$$$$$\\Desktop\\060339051236.p12";
-            var xmlNoFirmado = "C:\\Users\\$$$$$\\Desktop\\noFirmado.xml";
-            var xmlFirmado = "C:\\Users\\$$$$$\\Desktop\\firmado.xml";
 
-            var javapath = "C:\\Users\\$$$$$\\Facturacion_C_Sharp\\Java_bin\\signer.jar";
-
-            var config = new Configuracion(user, userPass, p12, pin, xmlNoFirmado, xmlFirmado);
+            var config = new Configuracion(user, userPass, p12, pin);
             var FH = new FacturacionHacienda(config);
 ```
 
-######Crear un objeto emisor y receptor
+## Crear un objeto emisor y receptor
 ```c#
             //Emisor
             var cedula = new DocumentoIdentificacion(DocumentoIdentificacion.TipoIdentificacion.Cedula_Fisica, "202220222");
@@ -44,7 +41,7 @@ Actualmente cuenta con las siguientes características:
             var cedulaReceptor = new DocumentoIdentificacion(DocumentoIdentificacion.TipoIdentificacion.Cedula_Fisica, "101110111");
             var receptor = new Receptor("NOMBRE RECEPTOR", identificacion: cedulaReceptor);
 ```
-######Crear items y tipo de documento
+## Crear items y tipo de documento
 ```c#
             var items = new List<Item>();
             items.Add(new Item("1", "1", "Sp", "Desarrollo de Software y Mantenimiento", 300, 300, 300, 300, new string[] { "001" }));
@@ -63,21 +60,18 @@ Impuesto[] { tax }));
                                         Documento.MedioPago.Efectivo, numeroFac, Documento.TipoDocumento.Factura_Electronica,
                                         secCod, items.ToArray(), resumenFac, Documento.SituacionDocumento.Normal, receptor);
 ```
-######Guardar XML y enviar
+## Firmar doc y enviar
 ```c#
-            //guardar XML no firmado
-            FH.GuardarXML_NO_Firmado(factura, config.Xml_sin_firmar_path);
-
             //firmar XML
-            FirmadorXML.Firmar(javapath, config);
+            FirmadorXML.Firmar(config);
 
             //Enviar a Hacienda
-            var stado = FH.EnviarDocumento(factura, xmlFirmado);
+            var esEnviado = FH.EnviarDocumento(factura, xmlFirmado);
 
             //Espera a Hacienda
-            System.Threading.Thread.Sleep(1000);
+            System.Threading.Thread.Sleep(2500);
 
-			//Optener el estado de la factura
+            //Optener el estado de la factura
             var estado = FH.EstadoDocumento(factura.ClaveNumerica());
             Console.WriteLine(estado);
 ```
@@ -85,8 +79,6 @@ Impuesto[] { tax }));
 ## TODO
 
 - Verificar el XML contra el XSD
-- Firmado de XML en C# ver 
-(https://github.com/CRLibre/API_Hacienda/blob/4d1c2ca3384817b3cfcf886586eb034e2a55133e/api/contrib/signXML/Firmadohaciendacr.php)
 
 ## Contacto
 Fabián Balmaceda Rescia
