@@ -1,25 +1,27 @@
 # Features
 
-Esta librería es una traducción de https://github.com/apokalipto/facturacr para C# .net.
+Esta librería esta impirada en https://github.com/apokalipto/facturacr
 
 Esta librería implementa los procesos de facturación electrónica del Ministerio de Hacienda de Costa Rica en Ruby. Puede ser utilizada 
 como punto de partida para realizar la integración necesaria con el Ministerio de Hacienda.
 
 Actualmente cuenta con las siguientes características:
-
+- Funcionalidad con .NetCore 2 y .NetFramework4
 - Generación de XML
--   Firmado de XML ( utilizando https://github.com/ctt-gob-es/FirmaXadesNet45 )
--   Comunicación con el API del ministerio de hacienda
+- Firmado de XML ( utilizando https://github.com/ctt-gob-es/FirmaXadesNet45 )
+- Comunicación con el API del ministerio de hacienda(enviar documento y comsultar estados)
+
+Se emplean las librerias:
+- Realizar peticiones a la api: https://github.com/restsharp/RestSharp
+- Leer json de respuesta: https://github.com/JamesNK/Newtonsoft.Json
+- Firmado de XML: https://github.com/ctt-gob-es/FirmaXadesNet45 )
 
 ## Consideraciones importantes
 
 - El formado de las fechas debe ser "yyyy-MM-dd'T'HH:mm:sszzz"
-- Emisor->Identificacion->Numero debe ser en formato crudo y no en 12 digitos como en el numero de secuencia
+- Emisor->Identificacion->Numero debe ser en formato crudo y no en 12 digitos como en el número de secuencia
 
 ## Implementación
-
-####C#　
-
 ## Configurar las variales
 ```c#
             var user = "**************";
@@ -83,6 +85,9 @@ Impuesto[] { tax }));
 
 ## TODO
 - Verificar el XML contra el XSD
+- Optener todos los documentos desde Hacienda
+- Optener un documento de Hacienda
+- Parsear XML a clases de la librería
 
 ## Contacto
 Fabián Balmaceda Rescia
