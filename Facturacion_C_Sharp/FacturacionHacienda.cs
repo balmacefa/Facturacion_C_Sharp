@@ -51,6 +51,8 @@ namespace Facturacion_C_Sharp
         //Revisar en caso de error, almacena la ultima respuesta de peticion al server
         private IRestResponse response;
 
+        private String mensajeError;
+
         public FacturacionHacienda(Configuracion configuracion)
         {
             this.configuracion = configuracion;
@@ -73,6 +75,7 @@ namespace Facturacion_C_Sharp
 
             if (status != System.Net.HttpStatusCode.OK)
             {
+                mensajeError = response.ErrorMessage;
                 throw new ExecpcionFacturacionHacienda("Error autentificacion: " + response.ErrorMessage);
             }
             JObject json = JObject.Parse(response.Content);
@@ -82,6 +85,11 @@ namespace Facturacion_C_Sharp
 
         public Configuracion Configuracion { get => configuracion; set => configuracion = value; }
         public IRestResponse Response { get => response; set => response = value; }
+        public string MensajeError
+        {
+            get => mensajeError;
+            set => mensajeError = value;
+        }
 
         public void GuardarXML_NO_Firmado(Documento doc, String pathXML_NO_Firmado)
         {
@@ -123,6 +131,11 @@ namespace Facturacion_C_Sharp
             // execute the request
             response = restClient.Execute(request);
             return new EstadoDocumento(response);
+        }
+
+        public string ErroresEnvio ( )
+        {
+            return mensajeError;
         }
 
         //public EstadoDocumento ObtenerEstadoDocumento(String claveNumerica)
