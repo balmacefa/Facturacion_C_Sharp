@@ -30,6 +30,7 @@ namespace Facturacion_C_Sharp.Lib.DocumentoItems
         //      validates :reason, presence: true, length: {maximum: 180}
 
         private Documento.TipoDocumento tipoDoc;
+        //Clave Numerica
         private String numero;
         //DD-MM-YYYY HH:MM:SS
         private DateTime fechaEmision;
