@@ -1,49 +1,42 @@
-﻿using System;
+﻿using FirmaXadesNet;
+using FirmaXadesNet.Crypto;
+using FirmaXadesNet.Signature.Parameters;
+using System;
 using System.Diagnostics;
+using System.IO;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Facturacion_C_Sharp.Lib
 {
     public class FirmadorXML
     {
-//https://github.com/CRLibre/API_Hacienda/blob/4d1c2ca3384817b3cfcf886586eb034e2a55133e/api/contrib/signXML/Firmadohaciendacr.php
-        public static void ExecuteCommand(string command)
+
+        public static String Firmar ( Documento doc, String p12, String password )
         {
-            Process proc = new System.Diagnostics.Process();
+            XadesService xadesService = new XadesService( );
+            SignatureParameters parametros = new SignatureParameters( );
 
-            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
-            {
-                proc.StartInfo.FileName = "cmd.exe";
-                proc.StartInfo.Arguments = "/C " + command;
-            }
-            else
-            {
-                proc.StartInfo.FileName = "/bin/bash";
-                proc.StartInfo.Arguments = "-c \" " + command + " \"";
-            }
+            // Política de firma de factura-e 3.1
+            parametros.SignaturePolicyInfo = new SignaturePolicyInfo( );
+            parametros.SignaturePolicyInfo.PolicyIdentifier = "https://tribunet.hacienda.go.cr/docs/esquemas/2016/v4/Resolucion%20Comprobantes%20Electronicos%20%20DGT-R-48-2016.pdf";
+            parametros.SignaturePolicyInfo.PolicyHash = "V8lVVNGDCPen6VELRD1Ja8HARFk=";
+            parametros.SignaturePackaging = SignaturePackaging.ENVELOPED;
+            parametros.DataFormat = new DataFormat( );
+            parametros.DataFormat.MimeType = "text/xml";
+            parametros.SignerRole = new SignerRole( );
+            parametros.SignerRole.ClaimedRoles.Add( "emisor" );
+            parametros.Signer = new Signer( new X509Certificate2( p12, password ) );
 
-            proc.StartInfo.UseShellExecute = false;
-            proc.StartInfo.RedirectStandardOutput = true;
-            proc.Start();
-            proc.WaitForExit();
-        }
 
-        public static void Firmar(String javafile_path, Configuracion conf)
-        {
-            var null_device = Environment.OSVersion.Platform == PlatformID.Win32NT ? "/nul" : "/dev/null";
-            var s = " ";
+            Stream stream = new MemoryStream( );
+            doc.OptenerXML_Nofirmado().Save( stream );
+            // Rewind the stream ready to read from it elsewhere
+            stream.Position = 0;
 
-            var comando = "java -jar "
-            + javafile_path
-            + s + conf.Key_path
-            + s + conf.Key_password
-            + s + conf.Xml_sin_firmar_path
-            + s + conf.Xml_firmado_path
-            + s + "1>" + null_device
-            + s + "2>" + null_device;
+            var docFirmado = xadesService.Sign( stream, parametros );
 
-            ExecuteCommand(comando);
-
-            //system("java -jar #{FE.bin}/signer/signer.jar #{@key_file} #{@password} #{@path} #{@out_path} 1>#{null_device} 2>#{null_device}")
+            byte[] AsBytes = docFirmado.GetDocumentBytes( );
+            return Convert.ToBase64String( AsBytes ).Replace( "\n", "" );
         }
     }
 }

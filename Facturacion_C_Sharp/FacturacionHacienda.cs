@@ -75,7 +75,7 @@ namespace Facturacion_C_Sharp
 
             if( status != System.Net.HttpStatusCode.OK )
             {
-                mensajeError = response.ErrorMessage;
+                mensajeError = "Err: "+response.ErrorMessage;
                 throw new ExecpcionFacturacionHacienda( "Error autentificacion: " + response.ErrorMessage );
             }
             JObject json = JObject.Parse( response.Content );
@@ -97,12 +97,7 @@ namespace Facturacion_C_Sharp
             set => mensajeError = value;
         }
 
-        public void GuardarXML_NO_Firmado ( Documento doc, String pathXML_NO_Firmado )
-        {
-            doc.OptenerXML_Nofirmado( ).Save( pathXML_NO_Firmado, System.Xml.Linq.SaveOptions.DisableFormatting );
-        }
-
-        public bool EnviarDocumento ( Documento documento, String pathXML )
+        public bool EnviarDocumento ( Documento documento )
         {
             Autenticar( );
             var request = new RestRequest( configuracion.Documents_endpoint + "/recepcion", Method.POST );
@@ -112,7 +107,7 @@ namespace Facturacion_C_Sharp
 
             request.AddHeader( "Accept", "application/json" );
             //request.Parameters.Clear();
-            request.AddParameter( "application/json", documento.JsonPayload( pathXML ).ToString( ), ParameterType.RequestBody );
+            request.AddParameter( "application/json", documento.JsonPayload( ).ToString( ), ParameterType.RequestBody );
 
 
             // execute the request

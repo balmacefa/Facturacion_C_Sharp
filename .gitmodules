@@ -1,0 +1,3 @@
+[submodule "submodule/FirmaXadesNet45"]
+	path = submodule/FirmaXadesNet45
+	url = git@github.com:ctt-gob-es/FirmaXadesNet45.git

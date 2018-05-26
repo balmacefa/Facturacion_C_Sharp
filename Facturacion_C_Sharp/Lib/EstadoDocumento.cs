@@ -55,6 +55,11 @@ namespace Facturacion_C_Sharp.Lib
                 mensajeHacienda = "ERROR CON LA PETICION, es probable que no se encuentre la factura en el servidor de Hacienda";
             }
 
+            if( mensajeHacienda == null )
+            {
+                mensajeHacienda = estadoEnHacienda;
+            }
+
         }
 
         public override string ToString()

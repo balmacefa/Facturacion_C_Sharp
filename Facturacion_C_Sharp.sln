@@ -1,9 +1,14 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facturacion_C_Sharp", "Facturacion_C_Sharp\Facturacion_C_Sharp.csproj", "{94760A46-89DD-4658-905A-A62E977953BA}"
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2018
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Facturacion_C_Sharp", "Facturacion_C_Sharp\Facturacion_C_Sharp.csproj", "{94760A46-89DD-4658-905A-A62E977953BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "..\Test\Test\Test.csproj", "{72384B79-0B47-494E-B5CC-5F6F705F2814}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "..\Test\Test\Test.csproj", "{72384B79-0B47-494E-B5CC-5F6F705F2814}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FirmaXadesNet", "submodule\FirmaXadesNet45\FirmaXadesNet\FirmaXadesNet.csproj", "{84B87815-DD45-4C60-B343-C11D45847BDF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Xades", "submodule\FirmaXadesNet45\Library\Microsoft.Xades.csproj", "{EE1DC57A-344A-4B0A-82CE-5FD328C14894}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,5 +24,19 @@ Global
 		{72384B79-0B47-494E-B5CC-5F6F705F2814}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72384B79-0B47-494E-B5CC-5F6F705F2814}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72384B79-0B47-494E-B5CC-5F6F705F2814}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84B87815-DD45-4C60-B343-C11D45847BDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84B87815-DD45-4C60-B343-C11D45847BDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84B87815-DD45-4C60-B343-C11D45847BDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84B87815-DD45-4C60-B343-C11D45847BDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE1DC57A-344A-4B0A-82CE-5FD328C14894}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE1DC57A-344A-4B0A-82CE-5FD328C14894}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE1DC57A-344A-4B0A-82CE-5FD328C14894}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE1DC57A-344A-4B0A-82CE-5FD328C14894}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F98F52C3-88E0-45D0-A338-596A461A2958}
 	EndGlobalSection
 EndGlobal

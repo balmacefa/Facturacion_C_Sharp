@@ -23,4 +23,8 @@
     <PackageReference Include="RestSharp" Version="106.2.2" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\submodule\FirmaXadesNet45\FirmaXadesNet\FirmaXadesNet.csproj" />
+    <ProjectReference Include="..\submodule\FirmaXadesNet45\Library\Microsoft.Xades.csproj" />
+  </ItemGroup>
 </Project>

@@ -12,67 +12,67 @@ namespace Facturacion_C_Sharp.Lib
     {
         public enum CondicionVenta
         {
-            [Description("01")]
+            [Description( "01" )]
             Contado = 01,
-            [Description("02")]
+            [Description( "02" )]
             Crédito = 02,
-            [Description("03")]
+            [Description( "03" )]
             Consignación = 03,
-            [Description("04")]
+            [Description( "04" )]
             Apartado = 04,
-            [Description("05")]
+            [Description( "05" )]
             Arrendamiento_con_Opción_de_Compra = 5,
-            [Description("06")]
+            [Description( "06" )]
             Arrendamiento_en_Función_Financiera = 6,
-            [Description("99")]
+            [Description( "99" )]
             Otros = 99
         }
 
         public enum MedioPago
         {
-            [Description("01")]
+            [Description( "01" )]
             Efectivo = 01,
-            [Description("02")]
+            [Description( "02" )]
             Tarjeta = 02,
-            [Description("03")]
+            [Description( "03" )]
             Cheque = 03,
-            [Description("04")]
+            [Description( "04" )]
             Transferencia = 04,
-            [Description("05")]
+            [Description( "05" )]
             Recaudado_por_Terceros,
-            [Description("99")]
+            [Description( "99" )]
             Otros = 99
         }
 
         public enum TipoDocumento
         {
-            [Description("01")]
+            [Description( "01" )]
             Factura_Electronica = 01,
-            [Description("02")]
+            [Description( "02" )]
             Nota_de_débito = 2,
-            [Description("03")]
+            [Description( "03" )]
             Nota_de_crédito = 03,
-            [Description("04")]
+            [Description( "04" )]
             Tiquete_Electrónico = 04,
-            [Description("05")]
+            [Description( "05" )]
             Nota_de_despacho = 05,
-            [Description("06")]
+            [Description( "06" )]
             Contrato = 06,
-            [Description("07")]
+            [Description( "07" )]
             Procedimiento = 07,
-            [Description("08")]
+            [Description( "08" )]
             Comprobante_Emitido_en_Contingencia = 08,
-            [Description("99")]
+            [Description( "99" )]
             Otros = 99
         }
 
         public enum SituacionDocumento
         {
-            [Description("1")]
+            [Description( "1" )]
             Normal = 1,
-            [Description("2")]
+            [Description( "2" )]
             Contingencia = 2,
-            [Description("3")]
+            [Description( "3" )]
             Sin_Internet = 3
         }
 
@@ -95,7 +95,7 @@ namespace Facturacion_C_Sharp.Lib
         private CondicionVenta condicionVenta;
         private String plazoCredito;
         private MedioPago medioPago;
-        private Normativa normativa = new Normativa();
+        private Normativa normativa = new Normativa( );
         private String numero;
         private TipoDocumento tipoDocumento;
         private String codigoSeguridad;
@@ -109,7 +109,11 @@ namespace Facturacion_C_Sharp.Lib
         //Terminal o punto de venta
         private String terminalPuntodeVenta = "00001";
 
-        public Documento(DateTime fechaEmision,
+
+        //DocumentoFirmado Base64
+        private String documentoFirmadoBase64 = "";
+
+        public Documento ( DateTime fechaEmision,
                          Emisor emisor,
                          CondicionVenta condicionVenta,
                          MedioPago medioPago,
@@ -127,11 +131,11 @@ namespace Facturacion_C_Sharp.Lib
                          string plazoCredito = "",
                          string pais = "506",
                          string sede = "001",
-                         string terminalPuntodeVenta = "00001")
+                         string terminalPuntodeVenta = "00001" )
         {
-            if (normativa == null)
+            if( normativa == null )
             {
-                normativa = new Normativa();
+                normativa = new Normativa( );
             }
             this.fechaEmision = fechaEmision;
             this.emisor = emisor;
@@ -151,37 +155,88 @@ namespace Facturacion_C_Sharp.Lib
             this.terminalPuntodeVenta = terminalPuntodeVenta;
         }
 
-        public DateTime FechaEmision { get => fechaEmision; set => fechaEmision = value; }
-        public Emisor Emisor { get => emisor; set => emisor = value; }
-        public Receptor Receptor { get => receptor; set => receptor = value; }
-        public CondicionVenta CondicionVenta1 { get => condicionVenta; set => condicionVenta = value; }
-        public string PlazoCredito { get => plazoCredito; set => plazoCredito = value; }
-        public MedioPago MedioPago1 { get => medioPago; set => medioPago = value; }
-        public Normativa Normativa { get => normativa; set => normativa = value; }
-        public String Numero { get => numero; set => numero = value; }
-        public TipoDocumento TipoDocumento1 { get => tipoDocumento; set => tipoDocumento = value; }
-        public String CodigoSeguridad { get => codigoSeguridad; set => codigoSeguridad = value; }
-        public Item[] Items { get => items; set => items = value; }
-        public Referencia[] Referencias { get => referencias; set => referencias = value; }
-        public ResumenFactura ResumenFactura { get => resumenFactura; set => resumenFactura = value; }
-        public SituacionDocumento SituacionDocumento1 { get => situacionDocumento; set => situacionDocumento = value; }
-        public string Pais { get => pais; set => pais = value; }
-        public string Sede { get => sede; set => sede = value; }
-        public string TerminalPuntodeVenta { get => terminalPuntodeVenta; set => terminalPuntodeVenta = value; }
-
-        public String NumeroConsecutivo()
+        public DateTime FechaEmision
         {
-            return sede + terminalPuntodeVenta + tipoDocumento.ToDescriptionString() + numero.PadLeft(10, '0');
+            get => fechaEmision; set => fechaEmision = value;
+        }
+        public Emisor Emisor
+        {
+            get => emisor; set => emisor = value;
+        }
+        public Receptor Receptor
+        {
+            get => receptor; set => receptor = value;
+        }
+        public CondicionVenta CondicionVenta1
+        {
+            get => condicionVenta; set => condicionVenta = value;
+        }
+        public string PlazoCredito
+        {
+            get => plazoCredito; set => plazoCredito = value;
+        }
+        public MedioPago MedioPago1
+        {
+            get => medioPago; set => medioPago = value;
+        }
+        public Normativa Normativa
+        {
+            get => normativa; set => normativa = value;
+        }
+        public String Numero
+        {
+            get => numero; set => numero = value;
+        }
+        public TipoDocumento TipoDocumento1
+        {
+            get => tipoDocumento; set => tipoDocumento = value;
+        }
+        public String CodigoSeguridad
+        {
+            get => codigoSeguridad; set => codigoSeguridad = value;
+        }
+        public Item[] Items
+        {
+            get => items; set => items = value;
+        }
+        public Referencia[] Referencias
+        {
+            get => referencias; set => referencias = value;
+        }
+        public ResumenFactura ResumenFactura
+        {
+            get => resumenFactura; set => resumenFactura = value;
+        }
+        public SituacionDocumento SituacionDocumento1
+        {
+            get => situacionDocumento; set => situacionDocumento = value;
+        }
+        public string Pais
+        {
+            get => pais; set => pais = value;
+        }
+        public string Sede
+        {
+            get => sede; set => sede = value;
+        }
+        public string TerminalPuntodeVenta
+        {
+            get => terminalPuntodeVenta; set => terminalPuntodeVenta = value;
         }
 
-        public String ClaveNumerica()
+        public String NumeroConsecutivo ( )
         {
-            var fecha = String.Format("{0:ddMMyy}", fechaEmision);
-            return pais + fecha + emisor.Identificacion.NumeroFormato12 + NumeroConsecutivo() + situacionDocumento.ToDescriptionString() + codigoSeguridad.PadLeft(8, '0');
+            return sede + terminalPuntodeVenta + tipoDocumento.ToDescriptionString( ) + numero.PadLeft( 10, '0' );
         }
-        public String TagDocumento()
+
+        public String ClaveNumerica ( )
         {
-            switch (tipoDocumento)
+            var fecha = String.Format( "{0:ddMMyy}", fechaEmision );
+            return pais + fecha + emisor.Identificacion.NumeroFormato12 + NumeroConsecutivo( ) + situacionDocumento.ToDescriptionString( ) + codigoSeguridad.PadLeft( 8, '0' );
+        }
+        public String TagDocumento ( )
+        {
+            switch( tipoDocumento )
             {
                 case TipoDocumento.Factura_Electronica:
                     return "FacturaElectronica";
@@ -197,14 +252,14 @@ namespace Facturacion_C_Sharp.Lib
         }
 
 
-        public XElement RootDocumento()
+        public XElement RootDocumento ( )
         {
             XNamespace xsi = "http://www.w3.org/2001/XMLSchema-instance";
             XNamespace xsd = "http://www.w3.org/2001/XMLSchema";
 
             XNamespace xmlns;
 
-            switch (tipoDocumento)
+            switch( tipoDocumento )
             {
                 case TipoDocumento.Factura_Electronica:
                     xmlns = "https://tribunet.hacienda.go.cr/docs/esquemas/2017/v4.2/facturaElectronica";
@@ -223,147 +278,126 @@ namespace Facturacion_C_Sharp.Lib
                     break;
             }
 
-            XElement root = new XElement(xmlns + TagDocumento());
+            XElement root = new XElement( xmlns + TagDocumento( ) );
 
-            root.Add(new XAttribute("xmlns", xmlns.NamespaceName),
-                     new XAttribute(XNamespace.Xmlns + "xsi", xsi.NamespaceName),
-                     new XAttribute(XNamespace.Xmlns + "xsd", xsd.NamespaceName));
+            root.Add( new XAttribute( "xmlns", xmlns.NamespaceName ),
+                     new XAttribute( XNamespace.Xmlns + "xsi", xsi.NamespaceName ),
+                     new XAttribute( XNamespace.Xmlns + "xsd", xsd.NamespaceName ) );
 
             return root;
         }
 
 
 
-        public XDocument OptenerXML_Nofirmado()
+        public XDocument OptenerXML_Nofirmado ( )
         {
-            var root = RootDocumento();
+            var root = RootDocumento( );
 
-            root.Add(new XElement("Clave", ClaveNumerica()),
-                     new XElement("NumeroConsecutivo", NumeroConsecutivo()),
-                     new XElement("FechaEmision", fechaEmision.ToRfc3339String()));
+            root.Add( new XElement( "Clave", ClaveNumerica( ) ),
+                     new XElement( "NumeroConsecutivo", NumeroConsecutivo( ) ),
+                     new XElement( "FechaEmision", fechaEmision.ToRfc3339String( ) ) );
 
-            root.Add(emisor.GenerarXML());
+            root.Add( emisor.GenerarXML( ) );
 
-            if (receptor != null)
+            if( receptor != null )
             {
-                root.Add(receptor.GenerarXML());
+                root.Add( receptor.GenerarXML( ) );
             }
 
-            root.Add(new XElement("CondicionVenta", condicionVenta.ToDescriptionString()));
+            root.Add( new XElement( "CondicionVenta", condicionVenta.ToDescriptionString( ) ) );
 
-            if (!plazoCredito.Equals("") && condicionVenta == CondicionVenta.Crédito)
+            if( !plazoCredito.Equals( "" ) && condicionVenta == CondicionVenta.Crédito )
             {
-                root.Add(new XElement("PlazoCredito", plazoCredito));
+                root.Add( new XElement( "PlazoCredito", plazoCredito ) );
             }
 
-            root.Add(new XElement("MedioPago", medioPago.ToDescriptionString()));
+            root.Add( new XElement( "MedioPago", medioPago.ToDescriptionString( ) ) );
 
-            var detalleServicio = new XElement("DetalleServicio");
-            foreach (var item in items)
+            var detalleServicio = new XElement( "DetalleServicio" );
+            foreach( var item in items )
             {
-                detalleServicio.Add(item.GenerarXML());
+                detalleServicio.Add( item.GenerarXML( ) );
             }
-            root.Add(new XElement(detalleServicio));
+            root.Add( new XElement( detalleServicio ) );
 
-            root.Add(resumenFactura.GenerarXML());
+            root.Add( resumenFactura.GenerarXML( ) );
 
-            if (referencias != null)
+            if( referencias != null )
             {
-                foreach (var r in referencias)
+                foreach( var r in referencias )
                 {
-                    root.Add(r);
+                    root.Add( r );
                 }
             }
 
-            root.Add(normativa.GenerarXML());
+            root.Add( normativa.GenerarXML( ) );
 
             XDocument doc = new XDocument(
-                new XDeclaration("1.0", "UTF-8", null),
+                new XDeclaration( "1.0", "UTF-8", null ),
                 root
             );
 
-            RemoverNameSpaceVacios(doc);
+            RemoverNameSpaceVacios( doc );
 
             return doc;
         }
 
-        private void RemoverNameSpaceVacios(XDocument doc){
-            foreach (var node in doc.Root.Descendants())
+        private void RemoverNameSpaceVacios ( XDocument doc )
+        {
+            foreach( var node in doc.Root.Descendants( ) )
             {
                 // If we have an empty namespace...
-                if (node.Name.NamespaceName == "")
+                if( node.Name.NamespaceName == "" )
                 {
                     // Remove the xmlns='' attribute. Note the use of
                     // Attributes rather than Attribute, in case the
                     // attribute doesn't exist (which it might not if we'd
                     // created the document "manually" instead of loading
                     // it from a file.)
-                    node.Attributes("xmlns").Remove();
+                    node.Attributes( "xmlns" ).Remove( );
                     // Inherit the parent namespace instead
                     node.Name = node.Parent.Name.Namespace + node.Name.LocalName;
                 }
             }
         }
 
-        public JObject JsonPayload(String pathXML_Firmado)
+        public JObject JsonPayload ( )
         {
-            dynamic payload = new JObject();
-            payload.clave = ClaveNumerica();
-            payload.fecha = fechaEmision.ToRfc3339String();
+            dynamic payload = new JObject( );
+            payload.clave = ClaveNumerica( );
+            payload.fecha = fechaEmision.ToRfc3339String( );
 
-            dynamic jemisor = new JObject();
-            jemisor.tipoIdentificacion = emisor.Identificacion.TipoIdentificacion1.ToDescriptionString();
+            dynamic jemisor = new JObject( );
+            jemisor.tipoIdentificacion = emisor.Identificacion.TipoIdentificacion1.ToDescriptionString( );
             jemisor.numeroIdentificacion = emisor.Identificacion.NumeroFormato12;
 
             payload.emisor = jemisor;
 
-            if (receptor.Identificacion != null)
+            if( receptor.Identificacion != null )
             {
-                dynamic jreceptor = new JObject();
-                jreceptor.tipoIdentificacion = receptor.Identificacion.TipoIdentificacion1.ToDescriptionString();
+                dynamic jreceptor = new JObject( );
+                jreceptor.tipoIdentificacion = receptor.Identificacion.TipoIdentificacion1.ToDescriptionString( );
                 jreceptor.numeroIdentificacion = receptor.Identificacion.NumeroFormato12;
 
                 payload.receptor = jreceptor;
             }
 
             //Cargar archivo
-            if (File.Exists(pathXML_Firmado))
+            if( !documentoFirmadoBase64.Equals( "" ) )
             {
-                byte[] AsBytes = File.ReadAllBytes(pathXML_Firmado);
-                String AsBase64String = Convert.ToBase64String(AsBytes).Replace("\n", "");
-
-                payload.comprobanteXml = AsBase64String;
-            }
-            else
+                payload.comprobanteXml = documentoFirmadoBase64;
+            } else
             {
-                throw new ExecpcionFacturacionHacienda("Error lectura archivo XML: " + pathXML_Firmado);
+                throw new ExecpcionFacturacionHacienda( "No se ha firmado el Documento" );
             }
 
             return payload;
         }
 
-        public void FirmarDocumento(Configuracion configuracion)
+        public void FirmarDocumento ( Configuracion configuracion )
         {
-            String path = configuracion.Xml_firmado_path;
-            FirmadorXML.Firmar("javapath", configuracion);
+            documentoFirmadoBase64 = FirmadorXML.Firmar( this, configuracion.RutaLlaveCriptografica, configuracion.PinLlaveCriptografica );
         }
 
     }
 }
-
-//    def api_payload
-//      payload = { }
-//      payload[:clave] = key
-//      payload[:fecha] = @date.xmlschema
-//      payload[:emisor] = {
-//        tipoIdentificacion: @issuer.identification_document.document_type,
-//        numeroIdentificacion: @issuer.identification_document.id_number
-//}
-//      if @receiver.identification_document.present?
-//        payload[:receptor] = {
-//          tipoIdentificacion: @receiver.identification_document.document_type,
-//          numeroIdentificacion: @receiver.identification_document.id_number
-//        }
-//      end
-//      payload
-//end
