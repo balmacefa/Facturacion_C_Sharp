@@ -331,7 +331,7 @@ namespace Facturacion_C_Sharp.Lib
             {
                 foreach( var r in referencias )
                 {
-                    root.Add( r );
+                    root.Add( r.GenerarXML() );
                 }
             }
 

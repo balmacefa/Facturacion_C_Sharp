@@ -10,10 +10,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Java_bin\**" />
+    <EmbeddedResource Remove="Java_bin\**" />
+    <None Remove="Java_bin\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Utils\" />
     <Folder Include="Lib\" />
     <Folder Include="Lib\DocumentoItems\" />
-    <Folder Include="Java_bin\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Lib\DocumentoElectronico\NotaCreditoElectronica.cs" />
