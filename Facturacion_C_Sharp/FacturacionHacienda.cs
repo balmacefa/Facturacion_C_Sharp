@@ -1,5 +1,9 @@
 ﻿using System;
+using System.IO;
+using System.Xml;
+using System.Xml.Schema;
 using Facturacion_C_Sharp.Lib;
+using Facturacion_C_Sharp.Utils;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 using RestSharp.Authenticators;
@@ -75,7 +79,7 @@ namespace Facturacion_C_Sharp
 
             if( status != System.Net.HttpStatusCode.OK )
             {
-                mensajeError = "Err: "+response.ErrorMessage;
+                mensajeError = "Err: " + response.ErrorMessage;
                 throw new ExecpcionFacturacionHacienda( "Error autentificacion: " + response.ErrorMessage );
             }
             JObject json = JObject.Parse( response.Content );
@@ -134,9 +138,40 @@ namespace Facturacion_C_Sharp
             return new EstadoDocumento( response );
         }
 
+        public bool EsValidoElDocumentoContraXSD ( Documento documento )
+        {
+            var estado = XSDUtils.ValidarXML( documento );
+            mensajeError = estado.MensajeError;
+            return estado.Valido;
+        }
+
         public string GetMensajeError ( )
         {
             return mensajeError;
+        }
+
+        public void GuardarXMLEnviado ( Documento doc )
+        {
+            if( doc.DocumentoFirmado != null )
+            {
+                string path = @"DatosXML\Documentos_Enviados\";
+                Directory.CreateDirectory( path );
+                doc.DocumentoFirmado.Save( @path + doc.ClaveNumerica( ) + ".xml" );
+            }
+        }
+
+        public void GuardarXMLEstado ( EstadoDocumento estado )
+        {
+            if( estado.RepuestaXML != null )
+            {
+                string path = @"DatosXML\Estados\";
+                Directory.CreateDirectory( path );
+                estado.RepuestaXML.Document.Save( @path + estado.ClaveNumerica + ".xml" );
+            }
+        }
+
+        private void SaveXML ( XmlDocument doc, String ruta )
+        {
         }
 
         //public EstadoDocumento ObtenerEstadoDocumento(String claveNumerica)

@@ -1,5 +1,6 @@
 ﻿using FirmaXadesNet;
 using FirmaXadesNet.Crypto;
+using FirmaXadesNet.Signature;
 using FirmaXadesNet.Signature.Parameters;
 using System;
 using System.Diagnostics;
@@ -11,7 +12,7 @@ namespace Facturacion_C_Sharp.Lib
     public class FirmadorXML
     {
 
-        public static String Firmar ( Documento doc, String p12, String password )
+        public static SignatureDocument Firmar ( Documento doc, String p12, String password )
         {
             XadesService xadesService = new XadesService( );
             SignatureParameters parametros = new SignatureParameters( );
@@ -33,10 +34,7 @@ namespace Facturacion_C_Sharp.Lib
             // Rewind the stream ready to read from it elsewhere
             stream.Position = 0;
 
-            var docFirmado = xadesService.Sign( stream, parametros );
-
-            byte[] AsBytes = docFirmado.GetDocumentBytes( );
-            return Convert.ToBase64String( AsBytes ).Replace( "\n", "" );
+            return xadesService.Sign( stream, parametros );
         }
     }
 }

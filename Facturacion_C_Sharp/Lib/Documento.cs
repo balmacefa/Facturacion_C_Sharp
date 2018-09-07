@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.IO;
+using System.Xml;
 using System.Xml.Linq;
 using Facturacion_C_Sharp.Lib.DocumentoItems;
 using Facturacion_C_Sharp.Utils;
@@ -112,6 +113,7 @@ namespace Facturacion_C_Sharp.Lib
 
         //DocumentoFirmado Base64
         private String documentoFirmadoBase64 = "";
+        private XmlDocument documentoFirmado;
 
         public Documento ( DateTime fechaEmision,
                          Emisor emisor,
@@ -228,6 +230,11 @@ namespace Facturacion_C_Sharp.Lib
             get => documentoFirmadoBase64;
             set => documentoFirmadoBase64 = value;
         }
+        public XmlDocument DocumentoFirmado
+        {
+            get => documentoFirmado;
+            set => documentoFirmado = value;
+        }
 
         public String NumeroConsecutivo ( )
         {
@@ -256,12 +263,8 @@ namespace Facturacion_C_Sharp.Lib
             }
         }
 
-
-        public XElement RootDocumento ( )
+        public XNamespace GetNameSpace ( )
         {
-            XNamespace xsi = "http://www.w3.org/2001/XMLSchema-instance";
-            XNamespace xsd = "http://www.w3.org/2001/XMLSchema";
-
             XNamespace xmlns;
 
             switch( tipoDocumento )
@@ -282,6 +285,16 @@ namespace Facturacion_C_Sharp.Lib
                     xmlns = "ERROR TIPO DE DOCUMENTO";
                     break;
             }
+            return xmlns;
+        }
+
+
+        public XElement RootDocumento ( )
+        {
+            XNamespace xsi = "http://www.w3.org/2001/XMLSchema-instance";
+            XNamespace xsd = "http://www.w3.org/2001/XMLSchema";
+
+            var xmlns = GetNameSpace( );
 
             XElement root = new XElement( xmlns + TagDocumento( ) );
 
@@ -401,7 +414,15 @@ namespace Facturacion_C_Sharp.Lib
 
         public void FirmarDocumento ( Configuracion configuracion )
         {
-            documentoFirmadoBase64 = FirmadorXML.Firmar( this, configuracion.RutaLlaveCriptografica, configuracion.PinLlaveCriptografica );
+           var docFirmado = FirmadorXML.Firmar( this, configuracion.RutaLlaveCriptografica, configuracion.PinLlaveCriptografica );
+
+            //guargar en base 64
+            byte[] asBytes = docFirmado.GetDocumentBytes( );
+            documentoFirmadoBase64 = Convert.ToBase64String( asBytes ).Replace( "\n", "" );
+
+            //Guardar xml firmado
+            documentoFirmado = new XmlDocument( );
+            documentoFirmado.Load( new MemoryStream( asBytes ) );
         }
 
     }
