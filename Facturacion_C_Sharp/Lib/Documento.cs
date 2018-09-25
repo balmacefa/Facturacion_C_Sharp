@@ -55,14 +55,15 @@ namespace Facturacion_C_Sharp.Lib
             Nota_de_crédito = 03,
             [Description( "04" )]
             Tiquete_Electrónico = 04,
+
             [Description( "05" )]
-            Nota_de_despacho = 05,
+            Aceptación_del_comprobante_electrónico = 05,
             [Description( "06" )]
-            Contrato = 06,
+            Aceptación_parcial_del_comprobante_electrónico = 06,
             [Description( "07" )]
-            Procedimiento = 07,
-            [Description( "08" )]
-            Comprobante_Emitido_en_Contingencia = 08,
+            Rechazo_del_comprobante_electrónico = 07,
+            
+
             [Description( "99" )]
             Otros = 99
         }

@@ -23,15 +23,17 @@ namespace Facturacion_C_Sharp.Lib
             Rechazado = 3
         }
 
-        private String clareDocRespuesta;
+        private String clareDocRespuesta_MR;
         private string numeroReceptor_MR;
-        private DocumentoIdentificacion emisor_MR;
+        private DocumentoIdentificacion emisorAlQueSeResponde_MR;
         private DateTime fechaEmision_MR;
         private EstadoMensajeReceptor estadoMensajeReceptor_MR;
         private string detalleMensajeReceptor_MR;
+        private decimal montoTotalImpuesto_MR;
+        private decimal totalFactura_MR;
 
 
-        private DocumentoIdentificacion numeroCedulaReceptor_MR;
+        private DocumentoIdentificacion numeroCedulaReceptor_Nosotros_MR;
 
         private String pais = "506";
         private String sede = "001";
@@ -42,8 +44,8 @@ namespace Facturacion_C_Sharp.Lib
 
         public string ClareDocRespuesta
         {
-            get => clareDocRespuesta;
-            set => clareDocRespuesta = value;
+            get => clareDocRespuesta_MR;
+            set => clareDocRespuesta_MR = value;
         }
         public string NumeroReceptor_MR
         {
@@ -52,8 +54,8 @@ namespace Facturacion_C_Sharp.Lib
         }
         public DocumentoIdentificacion Emisor_MR
         {
-            get => emisor_MR;
-            set => emisor_MR = value;
+            get => emisorAlQueSeResponde_MR;
+            set => emisorAlQueSeResponde_MR = value;
         }
         public DateTime FechaEmision_MR
         {
@@ -72,8 +74,8 @@ namespace Facturacion_C_Sharp.Lib
         }
         public DocumentoIdentificacion NumeroCedulaReceptor_MR
         {
-            get => numeroCedulaReceptor_MR;
-            set => numeroCedulaReceptor_MR = value;
+            get => numeroCedulaReceptor_Nosotros_MR;
+            set => numeroCedulaReceptor_Nosotros_MR = value;
         }
         public string Pais
         {
@@ -100,22 +102,34 @@ namespace Facturacion_C_Sharp.Lib
             get => tipoDocumento;
             set => tipoDocumento = value;
         }
+        public decimal MontoTotalImpuesto
+        {
+            get => montoTotalImpuesto_MR;
+            set => montoTotalImpuesto_MR = value;
+        }
+        public decimal TotalFactura
+        {
+            get => totalFactura_MR;
+            set => totalFactura_MR = value;
+        }
 
         public MensajeReceptor ( string clareDocRespuesta,
-                                 string numeroReceptor_MR,
-                                 DocumentoIdentificacion emisor_MR,
+                                 DocumentoIdentificacion emisorAlQueSeResponde_MR,
                                  DateTime fechaEmision_MR,
                                  EstadoMensajeReceptor estadoMensajeReceptor_MR,
                                  string detalleMensajeReceptor_MR,
-                                 DocumentoIdentificacion numeroCedulaReceptor_MR )
+                                 decimal montoTotalImpuesto,
+                                 decimal totalFactura,
+                                 DocumentoIdentificacion numeroCedulaReceptor_Nosotros_MR,
+                                 string numeroReceptor_MR )
         {
-            this.clareDocRespuesta = clareDocRespuesta;
+            this.clareDocRespuesta_MR = clareDocRespuesta;
             this.numeroReceptor_MR = numeroReceptor_MR;
-            this.emisor_MR = emisor_MR;
+            this.emisorAlQueSeResponde_MR = emisorAlQueSeResponde_MR;
             this.fechaEmision_MR = fechaEmision_MR;
             this.estadoMensajeReceptor_MR = estadoMensajeReceptor_MR;
             this.detalleMensajeReceptor_MR = detalleMensajeReceptor_MR;
-            this.numeroCedulaReceptor_MR = numeroCedulaReceptor_MR;
+            this.numeroCedulaReceptor_Nosotros_MR = numeroCedulaReceptor_Nosotros_MR;
 
             switch( estadoMensajeReceptor_MR )
             {
@@ -142,7 +156,124 @@ namespace Facturacion_C_Sharp.Lib
         public String ClaveNumerica ( )
         {
             var fecha = String.Format( "{0:ddMMyy}", fechaEmision_MR );
-            return pais + fecha + numeroCedulaReceptor_MR.NumeroFormato12 + NumeroConsecutivo( ) + estadoMensajeReceptor_MR.ToDescriptionString( ) + codigoSeguridad.PadLeft( 8, '0' );
+            return pais + fecha + numeroCedulaReceptor_Nosotros_MR.NumeroFormato12 + NumeroConsecutivo( ) + estadoMensajeReceptor_MR.ToDescriptionString( ) + codigoSeguridad.PadLeft( 8, '0' );
+        }
+
+        public String TagDocumento ( )
+        {
+            return "MensajeReceptor";
+        }
+
+        public XNamespace GetNameSpace ( )
+        {
+            XNamespace xmlns;
+            xmlns = "https://tribunet.hacienda.go.cr/docs/esquemas/2017/v4.2/mensajeReceptor";
+            return xmlns;
+        }
+
+        //TODO:
+        public XElement RootDocumento ( )
+        {
+            XNamespace xsi = "http://www.w3.org/2001/XMLSchema-instance";
+            XNamespace xsd = "http://www.w3.org/2001/XMLSchema";
+
+            var xmlns = GetNameSpace( );
+
+            XElement root = new XElement( xmlns + TagDocumento( ) );
+
+            root.Add( new XAttribute( "xmlns", xmlns.NamespaceName ),
+                     new XAttribute( XNamespace.Xmlns + "xsi", xsi.NamespaceName ),
+                     new XAttribute( XNamespace.Xmlns + "xsd", xsd.NamespaceName ) );
+
+            return root;
+        }
+
+        public XDocument OptenerXML_Nofirmado ( )
+        {
+            var root = RootDocumento( );
+
+            root.Add( new XElement( "Clave", clareDocRespuesta_MR ),
+                     new XElement( "NumeroCedulaEmisor", emisorAlQueSeResponde_MR.NumeroCrudo ),
+                     new XElement( "FechaEmision", fechaEmision_MR.ToRfc3339String( ) ),
+                     new XElement( "Mensaje", estadoMensajeReceptor_MR.ToDescriptionString( ) ),
+                     new XElement( "DetalleMensaje", detalleMensajeReceptor_MR ),
+                     new XElement( "MontoTotalImpuesto", montoTotalImpuesto_MR ),
+                     new XElement( "TotalFactura", totalFactura_MR ),
+                     new XElement( "NumeroCedulaReceptor", numeroCedulaReceptor_Nosotros_MR.NumeroCrudo ),
+                     new XElement( "NumConsecutivoReceptor", ClaveNumerica( ) ) );
+
+
+            XDocument doc = new XDocument(
+                new XDeclaration( "1.0", "UTF-8", null ),
+                root
+            );
+
+            RemoverNameSpaceVacios( doc );
+
+            return doc;
+        }
+
+        private void RemoverNameSpaceVacios ( XDocument doc )
+        {
+            foreach( var node in doc.Root.Descendants( ) )
+            {
+                // If we have an empty namespace...
+                if( node.Name.NamespaceName == "" )
+                {
+                    // Remove the xmlns='' attribute. Note the use of
+                    // Attributes rather than Attribute, in case the
+                    // attribute doesn't exist (which it might not if we'd
+                    // created the document "manually" instead of loading
+                    // it from a file.)
+                    node.Attributes( "xmlns" ).Remove( );
+                    // Inherit the parent namespace instead
+                    node.Name = node.Parent.Name.Namespace + node.Name.LocalName;
+                }
+            }
+        }
+
+        public JObject JsonPayload ( )
+        {
+            dynamic payload = new JObject( );
+            payload.clave = ClaveNumerica( );
+            payload.fecha = fechaEmision_MR.ToRfc3339String( );
+
+            dynamic jemisor = new JObject( );
+            jemisor.tipoIdentificacion = emisorAlQueSeResponde_MR.TipoIdentificacion1.ToDescriptionString( );
+            jemisor.numeroIdentificacion = emisorAlQueSeResponde_MR.NumeroFormato12;
+
+            payload.emisor = jemisor;
+
+            dynamic jreceptor = new JObject( );
+            jreceptor.tipoIdentificacion = numeroCedulaReceptor_Nosotros_MR.TipoIdentificacion1.ToDescriptionString( );
+            jreceptor.numeroIdentificacion = numeroCedulaReceptor_Nosotros_MR.NumeroFormato12;
+
+            payload.receptor = jreceptor;
+
+            payload.consecutivoReceptor = consecutivoReceptor;
+            //Cargar archivo
+            if( !documentoFirmadoBase64.Equals( "" ) )
+            {
+                payload.comprobanteXml = documentoFirmadoBase64;
+            } else
+            {
+                throw new ExecpcionFacturacionHacienda( "No se ha firmado el Documento" );
+            }
+
+            return payload;
+        }
+
+        public void FirmarDocumento ( Configuracion configuracion )
+        {
+            var docFirmado = FirmadorXML.Firmar( this, configuracion.RutaLlaveCriptografica, configuracion.PinLlaveCriptografica );
+
+            //guargar en base 64
+            byte[] asBytes = docFirmado.GetDocumentBytes( );
+            documentoFirmadoBase64 = Convert.ToBase64String( asBytes ).Replace( "\n", "" );
+
+            //Guardar xml firmado
+            documentoFirmado = new XmlDocument( );
+            documentoFirmado.Load( new MemoryStream( asBytes ) );
         }
     }
 }

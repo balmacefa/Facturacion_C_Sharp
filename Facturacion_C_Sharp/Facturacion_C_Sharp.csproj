@@ -14,11 +14,6 @@
     <EmbeddedResource Remove="Java_bin\**" />
     <None Remove="Java_bin\**" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Lib\" />
-    <Folder Include="Lib\DocumentoItems\" />
-  </ItemGroup>
   <ItemGroup>
     <Compile Remove="Lib\DocumentoElectronico\NotaCreditoElectronica.cs" />
   </ItemGroup>
