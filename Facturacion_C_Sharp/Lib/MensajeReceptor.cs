@@ -23,17 +23,17 @@ namespace Facturacion_C_Sharp.Lib
             Rechazado = 3
         }
 
-        private String clareDocRespuesta_MR;
-        private string numeroReceptor_MR;
-        private DocumentoIdentificacion emisorAlQueSeResponde_MR;
-        private DateTime fechaEmision_MR;
-        private EstadoMensajeReceptor estadoMensajeReceptor_MR;
-        private string detalleMensajeReceptor_MR;
-        private decimal montoTotalImpuesto_MR;
-        private decimal totalFactura_MR;
+        private String claveDocRespuestaDocumentoTercero;
+        private string numeroConsetutivoReceptorNosotros;
+        private DocumentoIdentificacion emisorAlQueSeRespondeTercero;
+        private DateTime fechaEmisionNosotros;
+        private EstadoMensajeReceptor estadoMensajeReceptorNosotros;
+        private string detalleMensajeReceptorNosotros;
+        private decimal montoTotalImpuestoDocumentoTercero;
+        private decimal totalFacturaDocumentoTercero;
 
 
-        private DocumentoIdentificacion numeroCedulaReceptor_Nosotros_MR;
+        private DocumentoIdentificacion numeroCedulaReceptor_Nosotros;
 
         private String pais = "506";
         private String sede = "001";
@@ -42,40 +42,55 @@ namespace Facturacion_C_Sharp.Lib
         private String codigoSeguridad;
         private TipoDocumento tipoDocumento;
 
-        public string ClareDocRespuesta
+
+        //DocumentoFirmado Base64
+        private String documentoFirmadoBase64 = "";
+        private XmlDocument documentoFirmado;
+
+        public string ClaveDocRespuestaDocumentoTercero
         {
-            get => clareDocRespuesta_MR;
-            set => clareDocRespuesta_MR = value;
+            get => claveDocRespuestaDocumentoTercero;
+            set => claveDocRespuestaDocumentoTercero = value;
         }
-        public string NumeroReceptor_MR
+        public string NumeroConsetutivoReceptorNosotros
         {
-            get => numeroReceptor_MR;
-            set => numeroReceptor_MR = value;
+            get => numeroConsetutivoReceptorNosotros;
+            set => numeroConsetutivoReceptorNosotros = value;
         }
-        public DocumentoIdentificacion Emisor_MR
+        public DocumentoIdentificacion EmisorAlQueSeRespondeTercero
         {
-            get => emisorAlQueSeResponde_MR;
-            set => emisorAlQueSeResponde_MR = value;
+            get => emisorAlQueSeRespondeTercero;
+            set => emisorAlQueSeRespondeTercero = value;
         }
-        public DateTime FechaEmision_MR
+        public DateTime FechaEmisionNosotros
         {
-            get => fechaEmision_MR;
-            set => fechaEmision_MR = value;
+            get => fechaEmisionNosotros;
+            set => fechaEmisionNosotros = value;
         }
-        public EstadoMensajeReceptor EstadoMensajeReceptor_MR
+        public EstadoMensajeReceptor EstadoMensajeReceptorNosotros
         {
-            get => estadoMensajeReceptor_MR;
-            set => estadoMensajeReceptor_MR = value;
+            get => estadoMensajeReceptorNosotros;
+            set => estadoMensajeReceptorNosotros = value;
         }
-        public string DetalleMensajeReceptor_MR
+        public string DetalleMensajeReceptorNosotros
         {
-            get => detalleMensajeReceptor_MR;
-            set => detalleMensajeReceptor_MR = value;
+            get => detalleMensajeReceptorNosotros;
+            set => detalleMensajeReceptorNosotros = value;
         }
-        public DocumentoIdentificacion NumeroCedulaReceptor_MR
+        public decimal MontoTotalImpuestoDocumentoTercero
         {
-            get => numeroCedulaReceptor_Nosotros_MR;
-            set => numeroCedulaReceptor_Nosotros_MR = value;
+            get => montoTotalImpuestoDocumentoTercero;
+            set => montoTotalImpuestoDocumentoTercero = value;
+        }
+        public decimal TotalFacturaDocumentoTercero
+        {
+            get => totalFacturaDocumentoTercero;
+            set => totalFacturaDocumentoTercero = value;
+        }
+        public DocumentoIdentificacion NumeroCedulaReceptor_Nosotros
+        {
+            get => numeroCedulaReceptor_Nosotros;
+            set => numeroCedulaReceptor_Nosotros = value;
         }
         public string Pais
         {
@@ -102,36 +117,39 @@ namespace Facturacion_C_Sharp.Lib
             get => tipoDocumento;
             set => tipoDocumento = value;
         }
-        public decimal MontoTotalImpuesto
+        public string DocumentoFirmadoBase64
         {
-            get => montoTotalImpuesto_MR;
-            set => montoTotalImpuesto_MR = value;
+            get => documentoFirmadoBase64;
+            set => documentoFirmadoBase64 = value;
         }
-        public decimal TotalFactura
+        public XmlDocument DocumentoFirmado
         {
-            get => totalFactura_MR;
-            set => totalFactura_MR = value;
+            get => documentoFirmado;
+            set => documentoFirmado = value;
         }
 
-        public MensajeReceptor ( string clareDocRespuesta,
-                                 DocumentoIdentificacion emisorAlQueSeResponde_MR,
-                                 DateTime fechaEmision_MR,
-                                 EstadoMensajeReceptor estadoMensajeReceptor_MR,
-                                 string detalleMensajeReceptor_MR,
-                                 decimal montoTotalImpuesto,
-                                 decimal totalFactura,
-                                 DocumentoIdentificacion numeroCedulaReceptor_Nosotros_MR,
-                                 string numeroReceptor_MR )
-        {
-            this.clareDocRespuesta_MR = clareDocRespuesta;
-            this.numeroReceptor_MR = numeroReceptor_MR;
-            this.emisorAlQueSeResponde_MR = emisorAlQueSeResponde_MR;
-            this.fechaEmision_MR = fechaEmision_MR;
-            this.estadoMensajeReceptor_MR = estadoMensajeReceptor_MR;
-            this.detalleMensajeReceptor_MR = detalleMensajeReceptor_MR;
-            this.numeroCedulaReceptor_Nosotros_MR = numeroCedulaReceptor_Nosotros_MR;
+        public MensajeReceptor ( string claveDocRespuestaDocumentoTercero,
+                                 DocumentoIdentificacion emisorAlQueSeRespondeTercero,
+                                 DateTime fechaEmisionNosotros,
+                                 EstadoMensajeReceptor estadoMensajeReceptorNosotros,
+                                 decimal totalFacturaDocumentoTercero,
+                                 DocumentoIdentificacion numeroCedulaReceptor_Nosotros,
+                                 string numeroConsetutivoReceptorNosotros,
 
-            switch( estadoMensajeReceptor_MR )
+                                 //opcionales
+                                 decimal montoTotalImpuestoDocumentoTercero = -1,
+                                 string detalleMensajeReceptorNosotros = "" )
+        {
+            this.claveDocRespuestaDocumentoTercero = claveDocRespuestaDocumentoTercero;
+            this.numeroConsetutivoReceptorNosotros = numeroConsetutivoReceptorNosotros;
+            this.emisorAlQueSeRespondeTercero = emisorAlQueSeRespondeTercero;
+            this.fechaEmisionNosotros = fechaEmisionNosotros;
+            this.estadoMensajeReceptorNosotros = estadoMensajeReceptorNosotros;
+            this.detalleMensajeReceptorNosotros = detalleMensajeReceptorNosotros;
+            this.numeroCedulaReceptor_Nosotros = numeroCedulaReceptor_Nosotros;
+            this.montoTotalImpuestoDocumentoTercero = montoTotalImpuestoDocumentoTercero;
+            this.totalFacturaDocumentoTercero = totalFacturaDocumentoTercero;
+            switch( estadoMensajeReceptorNosotros )
             {
                 case EstadoMensajeReceptor.Aceptado:
                     tipoDocumento = TipoDocumento.Aceptación_del_comprobante_electrónico;
@@ -150,13 +168,13 @@ namespace Facturacion_C_Sharp.Lib
 
         public String NumeroConsecutivo ( )
         {
-            return sede + terminalPuntodeVenta + tipoDocumento.ToDescriptionString( ) + numeroReceptor_MR.PadLeft( 10, '0' );
+            return sede + terminalPuntodeVenta + tipoDocumento.ToDescriptionString( ) + numeroConsetutivoReceptorNosotros.PadLeft( 10, '0' );
         }
 
-        public String ClaveNumerica ( )
+        public String NumeroConsecutivoReceptor ( )
         {
-            var fecha = String.Format( "{0:ddMMyy}", fechaEmision_MR );
-            return pais + fecha + numeroCedulaReceptor_Nosotros_MR.NumeroFormato12 + NumeroConsecutivo( ) + estadoMensajeReceptor_MR.ToDescriptionString( ) + codigoSeguridad.PadLeft( 8, '0' );
+            var fecha = String.Format( "{0:ddMMyy}", fechaEmisionNosotros );
+            return pais + fecha + numeroCedulaReceptor_Nosotros.NumeroFormato12 + NumeroConsecutivo( ) + estadoMensajeReceptorNosotros.ToDescriptionString( ) + codigoSeguridad.PadLeft( 8, '0' );
         }
 
         public String TagDocumento ( )
@@ -192,15 +210,24 @@ namespace Facturacion_C_Sharp.Lib
         {
             var root = RootDocumento( );
 
-            root.Add( new XElement( "Clave", clareDocRespuesta_MR ),
-                     new XElement( "NumeroCedulaEmisor", emisorAlQueSeResponde_MR.NumeroCrudo ),
-                     new XElement( "FechaEmision", fechaEmision_MR.ToRfc3339String( ) ),
-                     new XElement( "Mensaje", estadoMensajeReceptor_MR.ToDescriptionString( ) ),
-                     new XElement( "DetalleMensaje", detalleMensajeReceptor_MR ),
-                     new XElement( "MontoTotalImpuesto", montoTotalImpuesto_MR ),
-                     new XElement( "TotalFactura", totalFactura_MR ),
-                     new XElement( "NumeroCedulaReceptor", numeroCedulaReceptor_Nosotros_MR.NumeroCrudo ),
-                     new XElement( "NumConsecutivoReceptor", ClaveNumerica( ) ) );
+            root.Add( new XElement( "Clave", claveDocRespuestaDocumentoTercero ) );
+            root.Add( new XElement( "NumeroCedulaEmisor", emisorAlQueSeRespondeTercero.NumeroCrudo ) );
+            root.Add( new XElement( "FechaEmision", fechaEmisionNosotros.ToRfc3339String( ) ) );
+            root.Add( new XElement( "Mensaje", estadoMensajeReceptorNosotros.ToDescriptionString( ) ) );
+
+            //opcional
+            if( detalleMensajeReceptorNosotros != "" )
+            {
+                root.Add( new XElement( "DetalleMensaje", detalleMensajeReceptorNosotros ) );
+            }
+            if( this.montoTotalImpuestoDocumentoTercero >= 0 )
+            {
+                root.Add( new XElement( "MontoTotalImpuesto", montoTotalImpuestoDocumentoTercero ) );
+            }
+
+            root.Add( new XElement( "TotalFactura", totalFacturaDocumentoTercero ) );
+            root.Add( new XElement( "NumeroCedulaReceptor", numeroCedulaReceptor_Nosotros.NumeroCrudo ) );
+            root.Add( new XElement( "NumConsecutivoReceptor", NumeroConsecutivoReceptor( ) ) );
 
 
             XDocument doc = new XDocument(
@@ -235,22 +262,22 @@ namespace Facturacion_C_Sharp.Lib
         public JObject JsonPayload ( )
         {
             dynamic payload = new JObject( );
-            payload.clave = ClaveNumerica( );
-            payload.fecha = fechaEmision_MR.ToRfc3339String( );
+            payload.clave = claveDocRespuestaDocumentoTercero;
+            payload.fecha = fechaEmisionNosotros.ToRfc3339String( );
 
             dynamic jemisor = new JObject( );
-            jemisor.tipoIdentificacion = emisorAlQueSeResponde_MR.TipoIdentificacion1.ToDescriptionString( );
-            jemisor.numeroIdentificacion = emisorAlQueSeResponde_MR.NumeroFormato12;
+            jemisor.tipoIdentificacion = emisorAlQueSeRespondeTercero.TipoIdentificacion1.ToDescriptionString( );
+            jemisor.numeroIdentificacion = emisorAlQueSeRespondeTercero.NumeroFormato12;
 
             payload.emisor = jemisor;
 
             dynamic jreceptor = new JObject( );
-            jreceptor.tipoIdentificacion = numeroCedulaReceptor_Nosotros_MR.TipoIdentificacion1.ToDescriptionString( );
-            jreceptor.numeroIdentificacion = numeroCedulaReceptor_Nosotros_MR.NumeroFormato12;
+            jreceptor.tipoIdentificacion = numeroCedulaReceptor_Nosotros.TipoIdentificacion1.ToDescriptionString( );
+            jreceptor.numeroIdentificacion = numeroCedulaReceptor_Nosotros.NumeroFormato12;
 
             payload.receptor = jreceptor;
 
-            payload.consecutivoReceptor = consecutivoReceptor;
+            payload.consecutivoReceptor = NumeroConsecutivoReceptor( );
             //Cargar archivo
             if( !documentoFirmadoBase64.Equals( "" ) )
             {

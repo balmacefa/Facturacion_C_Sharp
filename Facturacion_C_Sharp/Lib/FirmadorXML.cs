@@ -6,13 +6,23 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
+using System.Xml.Linq;
 
 namespace Facturacion_C_Sharp.Lib
 {
     public class FirmadorXML
     {
+        public static SignatureDocument Firmar ( MensajeReceptor msj, String p12, String password )
+        {
+            return Firmar( msj.OptenerXML_Nofirmado( ), p12, password );
+        }
 
         public static SignatureDocument Firmar ( Documento doc, String p12, String password )
+        {
+            return Firmar( doc.OptenerXML_Nofirmado( ), p12, password );
+        }
+
+        private static SignatureDocument Firmar ( XDocument docXML, String p12, String password )
         {
             XadesService xadesService = new XadesService( );
             SignatureParameters parametros = new SignatureParameters( );
@@ -30,7 +40,7 @@ namespace Facturacion_C_Sharp.Lib
 
 
             Stream stream = new MemoryStream( );
-            doc.OptenerXML_Nofirmado( ).Save( stream );
+            docXML.Save( stream );
             // Rewind the stream ready to read from it elsewhere
             stream.Position = 0;
 
