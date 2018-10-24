@@ -127,6 +127,40 @@ namespace Facturacion_C_Sharp
             }
         }
 
+        public bool EnviarMensajeReceptor ( MensajeReceptor mensajeReceptor )
+        {
+            Autenticar( );
+            var request = new RestRequest( configuracion.Documents_endpoint + "/recepcion", Method.POST );
+            request.AddHeader( "Authorization", "bearer " + token );
+
+            //request.AddJsonBody(documento.JsonPayload(pathXML).ToString());
+
+            request.AddHeader( "Accept", "application/json" );
+            //request.Parameters.Clear();
+            request.AddParameter( "application/json", mensajeReceptor.JsonPayload( ).ToString( ), ParameterType.RequestBody );
+
+
+            // execute the request
+            response = restClient.Execute( request );
+
+            if( response.StatusCode == System.Net.HttpStatusCode.OK || response.StatusCode == System.Net.HttpStatusCode.Accepted )
+            {
+                return true;
+            } else
+            {
+                string msj = "";
+                foreach( var item in response.Headers )
+                {
+                    if( item.Name == "X-Error-Cause" )
+                    {
+                        msj = item.Value as string;
+                    }
+                }
+                mensajeError = "Status: " + response.StatusDescription + ", Mensaje: " + msj + ", " + response.Content;
+                return false;
+            }
+        }
+
         public EstadoDocumento EstadoDocumento ( String claveNumerica )
         {
             Autenticar( );
@@ -150,28 +184,30 @@ namespace Facturacion_C_Sharp
             return mensajeError;
         }
 
-        public void GuardarXMLEnviado ( Documento doc )
+        public void GuardarXMLEnviado ( Documento doc, string rutaGuardado = @"DatosXML\Documentos_Enviados\" )
         {
             if( doc.DocumentoFirmado != null )
             {
-                string path = @"DatosXML\Documentos_Enviados\";
-                Directory.CreateDirectory( path );
-                doc.DocumentoFirmado.Save( @path + doc.ClaveNumerica( ) + ".xml" );
+                Directory.CreateDirectory( rutaGuardado );
+                doc.DocumentoFirmado.Save( @rutaGuardado + doc.ClaveNumerica( ) + ".xml" );
             }
         }
 
-        public void GuardarXMLEstado ( EstadoDocumento estado )
+        public void GuardarXMLEstado ( EstadoDocumento estado, string rutaGuardado = @"DatosXML\Estados\" )
         {
             if( estado.RepuestaXML != null )
             {
-                string path = @"DatosXML\Estados\";
-                Directory.CreateDirectory( path );
-                estado.RepuestaXML.Document.Save( @path + estado.ClaveNumerica + ".xml" );
+                Directory.CreateDirectory( rutaGuardado );
+                estado.RepuestaXML.Document.Save( rutaGuardado + estado.ClaveNumerica + ".xml" );
             }
         }
-
-        private void SaveXML ( XmlDocument doc, String ruta )
+        public void GuardarXMLMensajeReceptor ( MensajeReceptor mensajeReceptor, string rutaGuardado = @"DatosXML\MensajeReceptor\" )
         {
+            if( mensajeReceptor.DocumentoFirmado != null )
+            {
+                Directory.CreateDirectory( rutaGuardado );
+                mensajeReceptor.DocumentoFirmado.Save( @rutaGuardado + mensajeReceptor.IdentificadorGuardado( ) );
+            }
         }
 
         //public EstadoDocumento ObtenerEstadoDocumento(String claveNumerica)

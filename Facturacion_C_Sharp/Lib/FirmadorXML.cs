@@ -29,7 +29,7 @@ namespace Facturacion_C_Sharp.Lib
 
             // Política de firma de factura-e 3.1
             parametros.SignaturePolicyInfo = new SignaturePolicyInfo( );
-            parametros.SignaturePolicyInfo.PolicyIdentifier = "https://tribunet.hacienda.go.cr/docs/esquemas/2016/v4/Resolucion%20Comprobantes%20Electronicos%20%20DGT-R-48-2016.pdf";
+            parametros.SignaturePolicyInfo.PolicyIdentifier = "https://www.hacienda.go.cr/ATV/ComprobanteElectronico/docs/esquemas/2016/v4/Resolucion%20Comprobantes%20Electronicos%20%20DGT-R-48-2016.pdf";
             parametros.SignaturePolicyInfo.PolicyHash = "V8lVVNGDCPen6VELRD1Ja8HARFk=";
             parametros.SignaturePackaging = SignaturePackaging.ENVELOPED;
             parametros.DataFormat = new DataFormat( );

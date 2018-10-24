@@ -39,7 +39,7 @@ namespace Facturacion_C_Sharp.Lib
         private String sede = "001";
         //Terminal o punto de venta
         private String terminalPuntodeVenta = "00001";
-        private String codigoSeguridad;
+        private String codigoSeguridad = "8756";
         private TipoDocumento tipoDocumento;
 
 
@@ -137,7 +137,7 @@ namespace Facturacion_C_Sharp.Lib
                                  string numeroConsetutivoReceptorNosotros,
 
                                  //opcionales
-                                 decimal montoTotalImpuestoDocumentoTercero = -1,
+                                 decimal montoTotalImpuestoDocumentoTercero = 0,
                                  string detalleMensajeReceptorNosotros = "" )
         {
             this.claveDocRespuestaDocumentoTercero = claveDocRespuestaDocumentoTercero;
@@ -166,16 +166,21 @@ namespace Facturacion_C_Sharp.Lib
             }
         }
 
+        public string IdentificadorGuardado ( )
+        {
+            return NumeroConsecutivo( ) + " - " + claveDocRespuestaDocumentoTercero + ".xml";
+        }
+
         public String NumeroConsecutivo ( )
         {
             return sede + terminalPuntodeVenta + tipoDocumento.ToDescriptionString( ) + numeroConsetutivoReceptorNosotros.PadLeft( 10, '0' );
         }
 
-        public String NumeroConsecutivoReceptor ( )
-        {
-            var fecha = String.Format( "{0:ddMMyy}", fechaEmisionNosotros );
-            return pais + fecha + numeroCedulaReceptor_Nosotros.NumeroFormato12 + NumeroConsecutivo( ) + estadoMensajeReceptorNosotros.ToDescriptionString( ) + codigoSeguridad.PadLeft( 8, '0' );
-        }
+        //public String NumeroConsecutivoReceptor ( )
+        //{
+        //    var fecha = String.Format( "{0:ddMMyy}", fechaEmisionNosotros );
+        //    return pais + fecha + numeroCedulaReceptor_Nosotros.NumeroFormato12 + NumeroConsecutivo( ) + estadoMensajeReceptorNosotros.ToDescriptionString( ) + codigoSeguridad.PadLeft( 8, '0' );
+        //}
 
         public String TagDocumento ( )
         {
@@ -220,14 +225,14 @@ namespace Facturacion_C_Sharp.Lib
             {
                 root.Add( new XElement( "DetalleMensaje", detalleMensajeReceptorNosotros ) );
             }
-            if( this.montoTotalImpuestoDocumentoTercero >= 0 )
+            if( this.montoTotalImpuestoDocumentoTercero > 0 )
             {
                 root.Add( new XElement( "MontoTotalImpuesto", montoTotalImpuestoDocumentoTercero ) );
             }
 
             root.Add( new XElement( "TotalFactura", totalFacturaDocumentoTercero ) );
             root.Add( new XElement( "NumeroCedulaReceptor", numeroCedulaReceptor_Nosotros.NumeroCrudo ) );
-            root.Add( new XElement( "NumConsecutivoReceptor", NumeroConsecutivoReceptor( ) ) );
+            root.Add( new XElement( "NumConsecutivoReceptor", NumeroConsecutivo( ) ) );
 
 
             XDocument doc = new XDocument(
@@ -277,7 +282,7 @@ namespace Facturacion_C_Sharp.Lib
 
             payload.receptor = jreceptor;
 
-            payload.consecutivoReceptor = NumeroConsecutivoReceptor( );
+            payload.consecutivoReceptor = NumeroConsecutivo( );
             //Cargar archivo
             if( !documentoFirmadoBase64.Equals( "" ) )
             {

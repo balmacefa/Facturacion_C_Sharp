@@ -19,6 +19,23 @@ namespace Facturacion_C_Sharp.Lib.DocumentoItems
             NITE
         }
 
+        public static TipoIdentificacion StringToTipoIdentificacion ( String codigo )
+        {
+            switch( codigo )
+            {
+                case "01":
+                    return TipoIdentificacion.Cedula_Fisica;
+                case "02":
+                    return TipoIdentificacion.Cedula_Juridica;
+                case "03":
+                    return TipoIdentificacion.DIMEX;
+                case "04":
+                    return TipoIdentificacion.NITE;
+                default:
+                    return TipoIdentificacion.Cedula_Fisica;
+            }
+        }
+
         //attr_accessor :document_type, :id_number, :raw_id_number
 
         //validates :document_type, presence: true, inclusion: TYPES.keys
